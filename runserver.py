@@ -25,16 +25,20 @@ errors = {
     404: f"<script>location.href = '{address}error/404/index.html';</script>"
 }
 
+redirects = {
+    ss.root+"/index.html": "<body><a href=\"home/unsigned/index.html\"></a></body>"
+}
+
 
 @ss.handler("GET")
 def func(request):
     """ standard GET handler"""
     path = request.path.normalize()
     print("GET", path)
-    print(path,"==",ss.root+"/index.html","=",path==ss.root+"/index.html")
-    if path == ss.root+"/index.html":
-        print("DA")
-        return Responce("HTTP/1.0", "301 REDIRECT", "<body><a href=\"home/unsigned/index.html\"></a></body>")
+    for red in redirects:
+        if path == red:
+            print("   ", "301", "REDIRECT", path, redirects[red])
+            return Responce("HTTP/1.0", "301 REDIRECT", redirects[red])
     if not os.path.exists(str(path)):
         return Responce("HTTP/1.0", "404 NOT FOUND", errors[404])
     else:
