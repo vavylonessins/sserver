@@ -38,6 +38,7 @@ def func(request):
     for red in redirects:
         if str(path) == red:
             print("   ", "301", "REDIRECT", path, redirects[red])
+            print(">>>"+Responce("HTTP/1.0", "301 REDIRECT", redirects[red]).to_bytes().__repr__()+"<<<")
             return Responce("HTTP/1.0", "301 REDIRECT", redirects[red])
     if not os.path.exists(str(path)):
         return Responce("HTTP/1.0", "404 NOT FOUND", errors[404])
