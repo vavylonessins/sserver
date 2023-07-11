@@ -22,11 +22,11 @@ print(" "*3, ss.root+"/index.html")
 
 
 errors = {
-    404: f"<script>location.href = '{address}error/404/index.html';</script>"
+    404: f"<script>location.href = '\n\n{address}error/404/index.html'"
 }
 
 redirects = {
-    ss.root+"/index.html": "<body><a href=\"home/unsigned/index.html\"></a></body>"
+    ss.root+"/index.html": "Location: https://talisman.press/home/unsigned/index.html"
 }
 
 
@@ -36,7 +36,7 @@ def func(request):
     path = request.path.normalize()
     print("GET", path)
     for red in redirects:
-        if path == red:
+        if str(path) == red:
             print("   ", "301", "REDIRECT", path, redirects[red])
             return Responce("HTTP/1.0", "301 REDIRECT", redirects[red])
     if not os.path.exists(str(path)):
