@@ -1,0 +1,196 @@
+@font-face {
+  font-family: 'Blue Vinyl New';
+  font-style: normal;
+  src: url("fonts/BlueVinylNew.woff2") format("woff2");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+body {
+  align-content: center;
+  text-align: center;
+  align-items: center;
+  width: 100vw;
+  height: 100%;
+}
+
+.body {
+  background: black;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  bottom: 0;
+  top: 0;
+}
+
+h1 {
+  margin-top: 5px;
+}
+
+.header {
+  font-family: 'Digory Doodles', script, cursive;
+  position: sticky;
+  color: white;
+  top: 0;
+  background: black;
+  /*width: 100%;*/
+  height: 64px;
+  border-bottom: 1px solid gray;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.logo {
+  margin-top: 4px;
+}
+
+.slogan-div {
+  color: white;
+}
+
+.slogan-main {
+  margin-bottom: 8px;
+  font-family: 'Digory Doodles', script, cursive;
+  font-size: 3.5rem;
+}
+
+.wide-container {
+  border: 1px solid gray;
+  background-color: black;
+  color: white;
+  width: auto;
+  margin: 32px 40vw;
+  padding: 32px 10px 0px 10px;
+  height: 320px;
+}
+
+.wide-transparent-container {
+  margin: auto;
+  border-radius: 12px;
+  border-width: 0;
+  background-color: rgba(0,0,0,0);
+  color: black;
+  width: 50%;
+  padding: 40px 50px;
+  height: 320px;
+}
+
+.container-title {
+  font-family: 'Digory Doodles', script, cursive;
+  font-size: 3rem;
+  margin-bottom: 48px;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.columner {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: auto;
+}
+
+.input-box {
+  border: 1px solid gray;
+  background-color: black;
+  color: white;
+  font-size: 12pt;
+  padding: 4px;
+  left: 16px;
+  right: 16px;
+  width: 60%;
+}
+
+.submit {
+  border: none;
+  background: #D1695E;
+  color: white;
+  font-size: 14pt;
+  width: 64%;
+  height: 21pt;
+  margin-bottom: 32px;
+}
+
+.footer {
+  color: white;
+  bottom: 0;
+  width: 100%;
+  height: 6em;
+  background-color: black;
+  position: relative;
+  border-top: 1px solid gray;
+}
+
+.vcenter {
+  vertical-align: center;
+}
+
+.love {
+  display: inline-block;
+  width: 20px;
+  height: 20px; 
+  background-image: url("love.png");
+  background-position: 0 0; 
+  top: 4px;
+  margin-top: 4px;
+}
+
+.inline-style {
+  color: white;
+}
+
+.menu-button {
+  margin-top: 5px;
+  color: white;
+  font-size: 20pt;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.last-menu-button {
+  padding-right: 28px;
+}
+
+/*noinspection CssReplaceWithShorthandSafely*/
+.blog-post {
+  width: 30%;
+  margin-top: -1px;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid gray;
+  padding: 48px;
+}
+
+/*noinspection CssReplaceWithShorthandSafely*/
+.blog-post-first {
+  width: 30%;
+  margin-top: 64px;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid gray;
+  padding: 48px;
+}
+
+/*noinspection CssReplaceWithShorthandSafely*/
+.blog-post-last {
+  width: 30%;
+  margin-top: 0;
+  margin-bottom: 64px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid gray;
+  padding: 48px;
+}
+
+.blog-date {
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}

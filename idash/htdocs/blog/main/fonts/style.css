@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Digory Doodles';
+    src: local('Digory Doodles Regular'), local('Digory-Doodles-Regular'),
+        url('Digory_Doodles_PS.woff2') format('woff2'),
+        url('Digory_Doodles_PS.woff') format('woff'),
+        url('Digory_Doodles_PS.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }

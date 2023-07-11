@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>IDash</title>
+    <meta property="og:title" content="IDash">
+    <meta charset="utf-8"/>
+    <meta property="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+    <link rel="stylesheet" href="./fonts/style.css" type="text/css">
+  </head>
+  <body>
+      <div class="body">
+        <header class="header">
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                &nbsp;&nbsp;
+                </td>
+                <td>
+                  <img alt="logo" src="logo_oval.png" width="48" height="48" class="logo">
+                </td>
+                <td>
+                  <h1 style="font-weight: bold;">&nbsp;&nbsp;I&nbsp;Dashboard</h1>
+                </td>
+                <td style="overflow: auto; width: 100%"></td>
+                <td class="menu-button">
+                  <a href="#" class="menu-button">Блог</a>
+                </td>
+                <td class="menu-button">
+                  <a href="#" class="menu-button">Документация</a>
+                </td>
+                <td class="menu-button">
+                  <a href="#" class="menu-button">Партнерство</a>
+                </td>
+                <td class="menu-button last-menu-button">
+                  <a href="#" class="menu-button">FAQ</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </header>
+        <br/>
+        <div style="height: calc(calc(100vh - 579px) / 4)"></div>
+        <div class="slogan-div">
+          <span><h1 class="slogan-main">Теперь всё куда проще</h3></span>
+        </div>
+        <div style="height: calc(calc(100vh - 579px) / 4)"></div>
+        <div class="wide-container">
+          <form action="http://localhost:5000/signin" method="GET" class="login-form">
+            <h2 class="container-title">Вход</h2>
+            <label>
+              <input class="input-box" type="text" placeholder="Введите IDID" name="login" required>
+            </label><br/>
+            <br/>
+            <label>
+              <input class="input-box" type="password" placeholder="Введите пароль" name="psw" required>
+            </label>
+            <br/>
+            <br/>
+            <label><button class="submit">Войти</button></label>
+
+          </form>
+        </div>
+        <div style="height: calc(calc(100vh - 579px) / 2)"></div>
+      </div>
+      <div class="footer">
+        <br/>
+        &copy; 2022 - 2023 команда IDashboard<br/>
+        <br/>
+        <tbody>
+            <td>
+              Сделано с
+            </td>
+            <td>
+              <img alt="любовью" src="love.png" width="16">
+            </td>
+          </tbody>
+        </table>
+        <br/>
+        <br/>
+      </div>
+</body>
+</html>
