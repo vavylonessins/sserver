@@ -30,8 +30,8 @@ class Responce:
     status: str
     content: str
 
-    def __init__(self, p: str, s: str, c: str):
-        self.protocol = p
+    def __init__(self, s: str, c: str = ""):
+        self.protocol = "HTTP/1.0"
         self.status = s
         self.content = c
 
@@ -41,7 +41,7 @@ class Responce:
             cnt = self.content
         else:
             cnt = self.content.encode()
-        return self.protocol.encode() + b" " + self.status.encode() + b"\n\n" + cnt
+        return self.protocol.encode() + b" " + self.status.encode() + b"\r\n" + cnt
 
 
 class Ss:
@@ -122,20 +122,26 @@ class Path:
         self.raw = raw
 
     def __getattribute__(self, item):
-        if item in ("normalize", "base", "raw", "__new__", "__super__", "__str__", "__repr__", "__init__"):
+        if item in ("normalize", "base", "raw", "__new__", "__super__", "__str__", "__repr__", "__init__", "__class__"):
             return object.__getattribute__(self, item)
         else:
             return self.raw.__getattribute__(item)
 
-    def normalize(self):
+    def normalize(self) -> str:
         """..."""
-        return parse_path(Path("/", removesuffix(self.base, "/")+"/"+removeprefix(parse_path(self.raw), "/")))
+        return str(parse_path(Path("/", removesuffix(self.base, "/")+"/"+removeprefix(parse_path(self.raw), "/"))))
 
     def __str__(self):
         return self.raw
 
     def __repr__(self):
         return self.raw.__repr__()
+
+    def __cmp__(self, other):
+        if other.__class__ == Path:
+            return self.normalize().__cmp__(other.normalize())
+        else:
+            return self.normalize().__cmp__(other)
 
     def __add__(self, other):
         if type(other) == str:
@@ -158,7 +164,7 @@ class Request:
         self.method = m
         self.protocol = pr
         self.headers = h
-        self.path = pt if pt is Path else Path(self.server.root, pt)
+        self.path = pt if pt is Path else Path(self.server.root, "."+pt+("index.html" if pt.endswith("/") else ""))
         self.client = c
 
 
