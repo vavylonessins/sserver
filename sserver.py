@@ -108,6 +108,11 @@ class Ss:
                     pass
                 except UnboundLocalError:
                     pass
+        try:
+            conn.close()
+            self.sock.detach()
+        except:
+            pass
 
 
 class Path:

@@ -22,11 +22,11 @@ print(" "*3, ss.root+"/index.html")
 
 
 errors = {
-    404: f"<script>location.href = '\n\n{address}error/404/index.html'"
+    404: f"<script>location.href = '\r\nLocation: https://localhost:8181/error/404/index.html'\r\n"
 }
 
 redirects = {
-    ss.root+"/index.html": "Location: https://talisman.press/home/unsigned/index.html"
+    ss.root+"/index.html": "\r\nLocation: https://localhost:8181/home/unsigned/index.html\r\n"
 }
 
 
@@ -41,7 +41,7 @@ def func(request):
             print(">>>"+Responce("HTTP/1.0", "301 REDIRECT", redirects[red]).to_bytes().__repr__()+"<<<")
             return Responce("HTTP/1.0", "301 REDIRECT", redirects[red])
     if not os.path.exists(str(path)):
-        return Responce("HTTP/1.0", "404 NOT FOUND", errors[404])
+        return Responce("HTTP/1.0", "301 REDIRECT", errors[404])
     else:
         ret = Responce("HTTP/1.0", "200 OK", autoload(path))
         return ret
