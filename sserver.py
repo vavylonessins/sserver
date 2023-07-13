@@ -6,7 +6,6 @@ import os.path
 import socket
 import random
 from multiprocessing import Process
-from typing import Any
 import traceback as tb
 
 
@@ -24,16 +23,21 @@ def removeprefix(st, sst):
         return st
 
 
-class Responce:
+class Response:
     """..."""
     protocol: str
     status: str
     content: str
 
-    def __init__(self, s: str, c: str = ""):
+    # noinspection PyDefaultArgument
+    def __init__(self, s: str, c: str = "", h: dict = {}):
         self.protocol = "HTTP/1.0"
         self.status = s
         self.content = c
+        self.headers = h
+
+    def __str__(self):
+        return " ".join((self.protocol, self.status, repr(self.content)))
 
     def to_bytes(self):
         """..."""
@@ -41,7 +45,14 @@ class Responce:
             cnt = self.content
         else:
             cnt = self.content.encode()
-        return self.protocol.encode() + b" " + self.status.encode() + b"\r\n" + cnt
+
+        hdr = b""
+
+        for k in tuple(self.headers.keys()):
+            hdr += k.encode() + b": " + self.headers[k].encode() + b"\n"
+        hdr = hdr[:-1]
+        print(hdr)
+        return self.protocol.encode() + b" " + self.status.encode() + b"\r\n" + hdr + b"\r\n\r\n" + cnt
 
 
 class Ss:
@@ -53,7 +64,7 @@ class Ss:
     run: bool
     handlers: dict
 
-    def __init__(self):
+    def __init__(self, debug = False):
         self.handlers = {}
         pass
 
@@ -86,7 +97,7 @@ class Ss:
                 if not data:
                     continue
                 method, file, protocol, headers = parse_request(data)
-                ret: Responce = self.handlers[method](Request(self, method, file, protocol, headers, addr))
+                ret: Response = self.handlers[method](Request(self, method, file, protocol, headers, addr))
                 conn.sendall(ret.to_bytes())
                 conn.close()
             except KeyboardInterrupt:
@@ -96,7 +107,7 @@ class Ss:
                 tb.print_exception(exc)
                 try:
                     # noinspection PyUnboundLocalVariable
-                    conn.sendall(Responce("HTTP/1.1", "500 UNKNOWN", "Unknown error from server").to_bytes())
+                    conn.sendall(Response("500 UNKNOWN", "Unknown error from server").to_bytes())
                 except OSError:
                     pass
                 except UnboundLocalError:

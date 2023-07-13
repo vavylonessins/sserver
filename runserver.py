@@ -4,9 +4,10 @@ import pprint
 from sserver import *
 import os
 import json
+import const
 
 
-ss = Ss()
+ss = Ss(const.debug)
 
 # We can use random free socket :)
 ss.init('localhost')  # , 8181)
@@ -23,42 +24,47 @@ print(ss.root)
 print(" "*3, ss.root+"/index.html")
 
 
-errors = {
-    404: f"Location: {address}error/404/index.html\r\n\r\nRedirecting..."
-}
-
-redirects = {
-    "./index.html": f"Location: {address}home/unsigned/index.html\r\n\r\nRedirecting..."
-}
+def to_html(data):
+    return "<!DOCTYPE HTML><head><link rel=\"stylesheet\" hre"\
+           "f=\"https://fonts.googleapis.com/css?family=Fira+Code\"></head><body style=\"back"\
+           "ground-color: black; color: white; font-family: Fira Code;"\
+           "font-famiily: monospace;\">" + data.replace("\t", "    ").replace(" ", "&nbsp;").replace("\n", "<br/>") +\
+           "<body/>"
 
 
 @ss.handler("GET")
 def func(request):
     """ standard GET handler"""
+    from sserver import Response
 
     try:
-        # logs
-        print("new GET request:\n", "   "+str(request.path)+"\n" +
-              pprint.pformat(request.headers).replace("\n", "\n    "))
+        if const.debug:
+            print("new GET request:\n", "   "+str(request.path)+"\n" +
+                  pprint.pformat(request.headers).replace("\n", "\n    "))
 
         if not os.path.exists(request.path.normalize()):
-            responce = Responce("301 REDIRECT", errors[404])
+            response = Response("301 REDIRECT", const.errors[404].format())
         else:
-            responce = Responce("200 OK", autoload(request.path.normalize()))
+            response = Response("200 OK", autoload(request.path.normalize()))
 
-        for red in redirects:
+        for red in const.redirects:
             if str(request.path) == red:
-                responce = Responce("301 REDIRECT", redirects[red])
+                response = const.redirects[red]
+                response.headers["Location"] = response.headers["Location"].format(address=address)
                 break
 
         if request.path.raw == "./favicon.ico":
-            responce = Responce("404")
-            return responce
+            response = Response("404")
+            return response
 
-        print("responce: "+repr(responce.to_bytes()[:128]))
-        return responce
+        if const.debug:
+            print("Response: "+repr(response.to_bytes()[:128]))
+
+        return response
     except Exception as exc:
-        return Responce("500 SERVER ERROR", "\n".join(tuple(tb.format_exception(exc))))
+        response = Response("500 SERVER ERROR", to_html("\n".join(tuple(tb.format_exception(exc)))))
+        print(response)
+        return response
 
 
 def parse_args(data: str):
@@ -73,7 +79,7 @@ def func(request: Request):
     function, args = function.split("?")
     args = parse_args(args)
 
-    return Responce("200 OK", json.dumps({"scope": scope, "func": function, "args": args}))
+    return Response("200 OK", json.dumps({"scope": scope, "func": function, "args": args}))
 
 
 ss.polling()
