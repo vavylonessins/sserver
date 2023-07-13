@@ -52,7 +52,7 @@ class Response:
             hdr += k.encode() + b": " + self.headers[k].encode() + b"\n"
         hdr = hdr[:-1]
         print(hdr)
-        return self.protocol.encode() + b" " + self.status.encode() + b"\r\n" + hdr + b"\r\n\r\n" + cnt
+        return self.protocol.encode() + b" " + self.status.encode() + b"\r\n" + hdr + b"\r\n" + cnt
 
 
 class Ss:
